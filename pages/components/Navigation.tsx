@@ -2,12 +2,15 @@ import { Nav, INavLink, INavStyles, INavLinkGroup } from '@fluentui/react/lib/Na
 import styles from "../../styles/Home.module.css"
 import { SharedColors, FontWeights, FontSizes, NeutralColors, Depths } from '@fluentui/theme';
 import { makeStyles } from '@fluentui/react-components';
+import { mainContext } from "../_app";
+import { useContext } from "react";
+
 
 
 const navStyles: Partial<INavStyles> = {
     root: {
         width: "250px",
-        height: '500px',
+        height: '170px',
         boxSizing: 'border-box',
         fontSize: "30px",
     },
@@ -43,6 +46,12 @@ const Navigation = () => {
 
     const classes = useStyles();
 
+    const { color, setColor } = useContext(mainContext);
+    
+    const changeBg = () => {
+        setColor(!color);
+    }
+
     return (
         <div className={classes.root}>
             <div
@@ -63,6 +72,8 @@ const Navigation = () => {
                 styles={navStyles}
                 groups={navLinkGroups}
             />
+
+            <button onClick={changeBg}>Change Background to { color ? "Blue" : "Green" }</button>
         </div>
     )
 }

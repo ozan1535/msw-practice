@@ -1,5 +1,7 @@
 import { Body, makeStyles } from '@fluentui/react-components';
 import { Card, CardHeader, CardFooter } from "@fluentui/react-card"
+import { mainContext } from "../_app";
+import { useContext } from "react";
 
 
 const useStyles = makeStyles({
@@ -14,7 +16,6 @@ const useStyles = makeStyles({
         justifyContent: "space-between",
         alignItems: "center",
         "border-radius": "25px",
-        backgroundColor: "#387C63",
         color: "#fff",
     },
     header: {
@@ -38,26 +39,20 @@ const useStyles = makeStyles({
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
-    },
-    cards: {
-        width: "100%",
-        height: "auto",
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-        flexWrap: "wrap"
     }
 })
-
 
 
 const Cards = ({ post }) => {
 
     const classes = useStyles();
 
+    const { color } = useContext(mainContext);
+
+    
 
     return (
-        <Card className={classes.root} key={post.id}>
+        <Card className={classes.root} key={post.id} style={{backgroundColor: color ? "#387C63" : "blue",}}>
             <div className={classes.header}>
                 <h4>{post.title}</h4>
             </div>

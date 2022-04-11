@@ -61,7 +61,6 @@ const Home = ({ books }: { books: booksModel[] }) => {
               <CardPreview>
                 <Image src={`/${book.id}.jpg`} style={{ objectFit: "cover" }} width={200} height={250} />
               </CardPreview>
-
               <div className={classes.footer}>
                 <span style={{ fontWeight: 700 }}>Author</span>
                 <span>{book.author}</span>
@@ -73,10 +72,7 @@ const Home = ({ books }: { books: booksModel[] }) => {
             </Card>
           ))
         }
-
-
       </div>
-
     </div>
   )
 }
