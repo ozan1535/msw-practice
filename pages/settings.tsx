@@ -1,10 +1,13 @@
 import type { GetServerSideProps } from 'next'
-import { Body, makeStyles } from '@fluentui/react-components';
+// import { Body, makeStyles } from '@fluentui/react-components';
 import styles from '../styles/Home.module.css'
-import { Card, CardHeader, CardFooter } from "@fluentui/react-card"
+// import { Card, CardHeader, CardFooter } from "@fluentui/react-card"
 import Head from 'next/head';
 import { postsModel } from '../imodels/postsModel';
 import { SharedColors, FontSizes } from '@fluentui/react';
+import { useMemo } from 'react';
+import Cards from './components/Card';
+import { makeStyles } from '@fluentui/react-components';
 
 const useStyles = makeStyles({
   root: {
@@ -53,9 +56,20 @@ const useStyles = makeStyles({
   }
 })
 
+
+
 const Settings = ({ posts }: { posts: postsModel[] }) => {
 
   const classes = useStyles();
+
+  const memoData = useMemo(() => {
+    return (
+      posts.slice(0, 12).map((post) => (
+        <Cards post={post} />
+      ))
+    )
+  }, [posts])
+
 
   return (
 
@@ -72,32 +86,14 @@ const Settings = ({ posts }: { posts: postsModel[] }) => {
       }}
       >Fetch Data</p>
 
-      <div className={classes.cards}>
-
-        {
-          posts.slice(0, 12).map((post) => (
-            <Card className={classes.root} key={post.id}>
-              <div className={classes.header}>
-                <h4>{post.title}</h4>
-              </div>
-              <div className={classes.body}>
-                <p>{post.body}</p>
-              </div>
-              <CardFooter className={classes.footer}>
-                ID: {post.id}
-              </CardFooter>
-            </Card>
-          ))
-        }
-
-      </div>
+      <div className={classes.cards}>{memoData}</div>
 
     </div>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL);
   const posts: postsModel[] = await response.json();
 
   return {
@@ -108,3 +104,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
 }
 
 export default Settings;
+
+{/* <Card className={classes.root} key={post.id}>
+          <div className={classes.header}>
+            <h4>{post.title}</h4>
+          </div>
+          <div className={classes.body}>
+            <p>{post.body}</p>
+          </div>
+          <CardFooter className={classes.footer}>
+            ID: {post.id}
+          </CardFooter>
+        </Card> */}

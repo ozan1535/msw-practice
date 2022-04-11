@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     "margin-left": "20px",
     "margin-right": "20px",
     "margin-bottom": "20px",
-    "border-radius": "20px"
+    "border-radius": "20px",
   },
   footer: {
     width: "100%",
@@ -106,3 +106,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 export default Home
 
+// 8 version
